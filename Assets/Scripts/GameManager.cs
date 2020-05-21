@@ -28,7 +28,5 @@ public class GameManager : MonoBehaviour
     public void IncreaseScore()
     {
     	count = count + 1;
-
-        SetCountText();
     }
 }
