@@ -30,6 +30,11 @@ public class Arrow : MonoBehaviour
         Stick();
         }
 
+        if(collision.gameObject.name.Contains("target"))
+        {
+            Debug.Log("Target " + collision.gameObject.name + " hit");
+        }
+
         Debug.Log(collision.gameObject.name);
     }
 

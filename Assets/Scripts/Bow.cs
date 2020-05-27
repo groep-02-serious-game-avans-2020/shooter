@@ -23,14 +23,20 @@ public class Bow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Increase the charge until it reaches the max set value
         if(Input.GetKey(fireButton) && _charge < chargeMax)
         {
             _charge += Time.deltaTime * chargeRate;
         }
 
+        // Spawn and shoot the arrow once the fire button is released
         if(Input.GetKeyUp(fireButton))
         {
-            Rigidbody arrow = Instantiate(arrowPrefab, arrowSpawn.transform.position, arrowSpawn.rotation) as Rigidbody;
+            Rigidbody arrow = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as Rigidbody;
+
+            Debug.Log(arrow.position);
+            Debug.Log(arrowSpawn.position);
+
             arrow.AddForce(arrowSpawn.forward * _charge, ForceMode.Impulse);
             _charge = 0;
         }

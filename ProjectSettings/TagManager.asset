@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Arrow
+  - target_1
+  - target_2
+  - target_3
+  - target_4
+  - target_5
   layers:
   - Default
   - TransparentFX
