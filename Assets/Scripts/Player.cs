@@ -6,10 +6,13 @@ public class Player : MonoBehaviour
 {
     private CharacterController characterController;
     public float movementSpeed = 3;
+    public GameObject scoreboard;
+    private bool toggle;
 
     // Start is called before the first frame update
     void Start()
     {
+        scoreboard.SetActive(false);
         characterController = GetComponent<CharacterController>();
     }
 
@@ -21,6 +24,20 @@ public class Player : MonoBehaviour
 
         Vector3 movement = transform.right * horizontal + transform.forward * vertical;
         characterController.SimpleMove(movement * movementSpeed);
+
+        if (Input.GetKeyDown("escape"))
+        {
+            if (toggle)
+            {
+                scoreboard.SetActive(false);
+                toggle = false;
+            } 
+            else
+            {
+                scoreboard.SetActive(true);
+                toggle = true;
+            }
+        }
 
         //if(movement.magnitude > 0)
         //{

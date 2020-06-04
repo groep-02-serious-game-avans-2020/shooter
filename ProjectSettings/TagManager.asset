@@ -10,6 +10,7 @@ TagManager:
   - target_3
   - target_4
   - target_5
+  - highscore_entry
   layers:
   - Default
   - TransparentFX
