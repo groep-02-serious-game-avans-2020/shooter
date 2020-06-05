@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    Rigidbody rigidbody;
-    bool hitObject = false;
+    private new Rigidbody rigidbody;
+    private BoxCollider boxCollider;
+    private bool hitObject = false;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        boxCollider = GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Rotate the arrow in the right direction when it hasn't hit something yet
         if (!hitObject)
         {
         transform.rotation = Quaternion.LookRotation(rigidbody.velocity);
@@ -24,18 +27,17 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!collision.gameObject.name.Contains("arrow"))
+        // If the arrow hits anything else than another arrow
+        if (!collision.gameObject.name.Contains("arrow"))
         {
-        hitObject = true;
-        Stick();
+            hitObject = true;
+            Stick();
         }
-
-        if(collision.gameObject.name.Contains("target"))
+        // If the arrow hits another arrow, ignore it's boxcollider
+        else
         {
-            Debug.Log("Target " + collision.gameObject.name + " hit");
+            Physics.IgnoreCollision(boxCollider, collision.collider, true);
         }
-
-        // Debug.Log(collision.gameObject.name);
     }
 
     private void Stick()

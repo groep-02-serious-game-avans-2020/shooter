@@ -1,4 +1,5 @@
 ﻿using Assets.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     private QuestionModel currentQuestion;
     private List<AnswerModel> answers;
     private int totalScore = 0;
+    private int questionsAnswered = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -43,12 +45,15 @@ public class GameManager : MonoBehaviour
                 },
                 new QuestionModel
                 {
-                    questionNumber = 2,
+                    questionNumber = 3,
                     question = "De leraren waren in staat te helpen bij problemen binnen het project.",
                     textAnswer = false
                 }
             }
         };
+
+        currentScoreText.text = "";
+
         answers = new List<AnswerModel>();
 
         currentSurvey = survey;
@@ -60,39 +65,41 @@ public class GameManager : MonoBehaviour
     {
         surveyNameText.text = currentSurvey.title;
         questionText.text = currentQuestion.question;
-        totalScoreText.text = totalScore.ToString();
+        totalScoreText.text = "Total score: " + totalScore.ToString();
     }
 
     public void IncreaseScore(int amount)
     {
         totalScore += amount;
-        currentScoreText.text = amount.ToString();
+        currentScoreText.text = "Last shot: " + amount.ToString();
     }
 
-    void AnswerQuestion(string textAnswer)
+    public void AnswerQuestion(string textAnswer)
     {
         answers.Add(new AnswerModel
         {
             questionNumber = currentQuestion.questionNumber,
             textAnswer = textAnswer
         });
+        questionsAnswered += 1;
         NextQuestion();
     }
 
-    void AnswerQuestion(int numberAnswer)
+    public void AnswerQuestion(int numberAnswer)
     {
         answers.Add(new AnswerModel
         {
             questionNumber = currentQuestion.questionNumber,
             numberAnswer = numberAnswer
         });
+        questionsAnswered += 1;
         NextQuestion();
     }
 
-    void NextQuestion()
+    private void NextQuestion()
     {
         // Check if there are more questions
-        if(currentSurvey.Questions[currentQuestion.questionNumber] != null)
+        if (questionsAnswered < currentSurvey.Questions.Count)
         {
             currentQuestion = currentSurvey.Questions[currentQuestion.questionNumber];
         } else
@@ -104,5 +111,6 @@ public class GameManager : MonoBehaviour
     void SurveyDone()
     {
         // TODO: Send answers to backend
+        Debug.Log("Survey done");
     }
 }
