@@ -24,7 +24,7 @@ public class Arrow : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.tag != "Arrow")
+        if(!collision.gameObject.name.Contains("arrow"))
         {
         hitObject = true;
         Stick();
@@ -35,7 +35,7 @@ public class Arrow : MonoBehaviour
             Debug.Log("Target " + collision.gameObject.name + " hit");
         }
 
-        Debug.Log(collision.gameObject.name);
+        // Debug.Log(collision.gameObject.name);
     }
 
     private void Stick()
