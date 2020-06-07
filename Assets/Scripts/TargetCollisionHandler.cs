@@ -14,6 +14,6 @@ public class TargetCollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        parentScript.RegisterCollision(this, collision);
+        parentScript.RegisterCollision(collision);
     }
 }

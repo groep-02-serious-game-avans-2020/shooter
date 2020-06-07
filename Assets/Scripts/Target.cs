@@ -8,14 +8,14 @@ public class Target : MonoBehaviour
     public Collider targetCollider;
     //public GameManager gameManager;
 
-    private TextMesh targetNumberText;
+    public TextMesh targetNumberText;
+    public GameObject scoreNumberTextPrefab;
     private int score;
     private int targetNumber;
 
     // Start is called before the first frame update
     void Start()
     {
-        targetNumberText = gameObject.GetComponentInChildren<TextMesh>();
         targetNumberText.text = targetNumber.ToString();
     }
 
@@ -50,7 +50,7 @@ public class Target : MonoBehaviour
         }
     }
 
-    public void RegisterCollision(TargetCollisionHandler child, Collision collision)
+    public void RegisterCollision(Collision collision)
     {
         GameObject collisionObject = collision.gameObject;
 
@@ -64,10 +64,20 @@ public class Target : MonoBehaviour
 
             score = calculateScore(distance);
 
+            SpawnScoreNumberText(score, hitPosition);
+
             Debug.Log("Target " + targetNumber + " hit, score is " + score);
 
             //gameManager.IncreaseScore(score);
             //gameManager.AnswerQuestion(0);
         }
+    }
+
+    public void SpawnScoreNumberText(int score, Vector3 position)
+    {
+        Quaternion rotation = gameObject.transform.rotation * Quaternion.Euler(0, 180, 0);
+
+        GameObject scoreNumber = Instantiate(scoreNumberTextPrefab, position, rotation);
+        scoreNumber.GetComponent<TextMesh>().text = score.ToString();
     }
 } 

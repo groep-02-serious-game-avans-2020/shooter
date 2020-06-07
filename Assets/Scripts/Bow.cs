@@ -1,12 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Bow : MonoBehaviour
 {
-    float _charge;
-
     public float chargeMax;
     public float chargeRate;
     public Slider chargeSlider;
@@ -15,6 +11,10 @@ public class Bow : MonoBehaviour
 
     public Transform arrowSpawn;
     public Rigidbody arrowPrefab;
+
+    private float _charge;
+    private Ray ray;
+    private RaycastHit raycastHit;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +25,15 @@ public class Bow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Shoot a ray from the center of the main camera
+        ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+        // If the ray hit's something, rotate the arrow spawnpoint towards it
+        if (Physics.Raycast(ray, out raycastHit))
+        {
+            arrowSpawn.transform.LookAt(raycastHit.point);
+        }
+
         chargeSlider.value = _charge;
 
         // Increase the charge until it reaches the max set value
