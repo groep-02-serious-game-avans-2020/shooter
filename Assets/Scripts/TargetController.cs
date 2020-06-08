@@ -16,6 +16,16 @@ class TargetController : MonoBehaviour
 
     void Start()
     {
+        SpawnTargets();
+    }
+
+    void Update()
+    {
+
+    }
+
+    void SpawnTargets()
+    {
         float width = (amountOfTargets - 1) * targetOffset;
         float middlePoint = width / 2;
 
@@ -29,12 +39,12 @@ class TargetController : MonoBehaviour
         spawnPoints.Add(firstSpawnPoint);
 
         // Calculate the other spawnpoints from the first one
-        for(int i = 0; i < amountOfTargets -1; i++)
+        for (int i = 0; i < amountOfTargets - 1; i++)
         {
             spawnPoints.Add(new Vector3(spawnPoints[i].x + targetOffset, transform.position.y, transform.position.z));
         }
 
-        for(int i = 0; i < spawnPoints.Count(); i++)
+        for (int i = 0; i < spawnPoints.Count(); i++)
         {
             // Instantiate new target
             GameObject currentTarget = Instantiate(targetPrefab, spawnPoints[i], gameObject.transform.rotation);
@@ -47,11 +57,6 @@ class TargetController : MonoBehaviour
 
             targets.Add(currentTarget);
         }
-    }
-
-    void Update()
-    {
-
     }
 }
 

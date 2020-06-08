@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Player player;
-    public Target[] targets;
     public Text questionText;
     public Text surveyNameText;
     public Text totalScoreText;
