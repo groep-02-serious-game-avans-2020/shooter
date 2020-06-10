@@ -152,7 +152,7 @@ public class DataManager : MonoBehaviour
 
                 }
                 else
-                {
+                { 
                     json += JsonUtility.ToJson(answers[i]);
                 }
             }
