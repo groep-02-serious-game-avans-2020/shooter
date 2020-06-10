@@ -6,6 +6,9 @@ public class Bow : MonoBehaviour
     public float chargeMax;
     public float chargeRate;
     public Slider chargeSlider;
+    public AudioSource bowAudioSource;
+    public AudioClip bowLoad;
+    public AudioClip bowShoot;
 
     public KeyCode fireButton;
 
@@ -36,8 +39,14 @@ public class Bow : MonoBehaviour
 
         chargeSlider.value = _charge;
 
+        // Play bow load sound effect
+        if (Input.GetKeyDown(fireButton))
+        {
+            bowAudioSource.PlayOneShot(bowLoad);
+        }
+
         // Increase the charge until it reaches the max set value
-        if(Input.GetKey(fireButton) && _charge < chargeMax)
+            if (Input.GetKey(fireButton) && _charge < chargeMax)
         {
             _charge += Time.deltaTime * chargeRate;
         }
@@ -45,6 +54,9 @@ public class Bow : MonoBehaviour
         // Spawn and shoot the arrow once the fire button is released
         if(Input.GetKeyUp(fireButton))
         {
+            // Play the shoot sound effect
+            bowAudioSource.PlayOneShot(bowShoot);
+
             // Spawn arrow
             Rigidbody arrow = Instantiate(arrowPrefab, arrowSpawn.position, arrowSpawn.rotation) as Rigidbody;
 

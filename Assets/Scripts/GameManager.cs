@@ -3,11 +3,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class for managing the bow and arrow game
+/// </summary>
 public class GameManager : MonoBehaviour
 {
-    public Player player;
+    public static GameManager singleton;
+
     public Text questionText;
     public Text surveyNameText;
     public Text totalScoreText;
@@ -19,44 +24,24 @@ public class GameManager : MonoBehaviour
     private int totalScore = 0;
     private int questionsAnswered = 0;
 
+    private void Awake()
+    {
+        if (singleton)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        singleton = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        // Mock survey
-        SurveyModel survey = new SurveyModel
-        {
-            _ID = "123456789",
-            title = "Evaluatie vak Gamification 2020",
-            resultUrl = "localhost:3000/api/answer/",
-            Questions = new List<QuestionModel>() 
-            {
-                new QuestionModel
-                {
-                    questionNumber = 1,
-                    question = "De samenwerking met de Informaticastudenten verliep goed.",
-                    textAnswer = false
-                },
-                new QuestionModel
-                {
-                    questionNumber = 2,
-                    question = "De leraren vertoonde deskundigheid en wisten goed waar ze het over hadden.",
-                    textAnswer = false
-                },
-                new QuestionModel
-                {
-                    questionNumber = 3,
-                    question = "De leraren waren in staat te helpen bij problemen binnen het project.",
-                    textAnswer = false
-                }
-            }
-        };
-
         currentScoreText.text = "";
-
         answers = new List<AnswerModel>();
-
-        currentSurvey = survey;
-        currentQuestion = currentSurvey.Questions[0];
+        currentSurvey = DataManager.singleton.currentSurvey;
+        currentQuestion = currentSurvey.questions[0];
+        Debug.Log(currentSurvey.title);
     }
 
     // Update is called once per frame
@@ -98,18 +83,30 @@ public class GameManager : MonoBehaviour
     private void NextQuestion()
     {
         // Check if there are more questions
-        if (questionsAnswered < currentSurvey.Questions.Count)
+        if (questionsAnswered < currentSurvey.questions.Count)
         {
-            currentQuestion = currentSurvey.Questions[currentQuestion.questionNumber];
-        } else
+            currentQuestion = currentSurvey.questions[currentQuestion.questionNumber];
+        }
+        else
         {
             SurveyDone();
         }
     }
 
+    /// <summary>
+    /// Sends the survey answers to the server and redirects to main menu after success
+    /// </summary>
     void SurveyDone()
     {
-        // TODO: Send answers to backend
-        Debug.Log("Survey done");
+        Debug.Log("Survey done, sending answers to server...", this);
+        if (DataManager.singleton.SubmitAnswers(answers, currentSurvey._id))
+        {
+            Debug.Log("Answers sent to server, redirecting to main menu", this);
+            SceneManager.LoadScene("main_menu");
+        }
+        else
+        {
+            // Error
+        }
     }
 }

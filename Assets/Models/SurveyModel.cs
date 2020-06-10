@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Assets.Models
 {
+    [Serializable]
     public class SurveyModel
     {
-        public String _ID { get; set; }
-        public String title { get; set; }
-        public List<QuestionModel> Questions { get; set; }
-        public String resultUrl { get; set; }
+        public string _id;
+        public string title;
+        public List<QuestionModel> questions;
     }
 }

@@ -8,6 +8,10 @@ public class Arrow : MonoBehaviour
     private BoxCollider boxCollider;
     private bool hitObject = false;
 
+    public AudioSource arrowAudioSource;
+    public AudioClip arrowHitSound;
+    public AudioClip arrowHitTargetSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +25,7 @@ public class Arrow : MonoBehaviour
         // Rotate the arrow in the right direction when it hasn't hit something yet
         if (!hitObject)
         {
-        transform.rotation = Quaternion.LookRotation(rigidbody.velocity);
+            transform.rotation = Quaternion.LookRotation(rigidbody.velocity);
         }
     }
 
@@ -30,8 +34,14 @@ public class Arrow : MonoBehaviour
         // If the arrow hits anything else than another arrow
         if (!collision.gameObject.name.Contains("arrow"))
         {
+            arrowAudioSource.PlayOneShot(arrowHitSound);
             hitObject = true;
             Stick();
+
+            if (collision.gameObject.name == "target_mesh")
+            {
+                arrowAudioSource.PlayOneShot(arrowHitTargetSound);
+            }
         }
         // If the arrow hits another arrow, ignore it's boxcollider
         else

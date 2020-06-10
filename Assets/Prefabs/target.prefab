@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2936866002080015828}
   - component: {fileID: 6088633439328188518}
   m_Layer: 0
-  m_Name: mesh
+  m_Name: target_mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,6 +190,8 @@ MonoBehaviour:
   targetCollider: {fileID: 2936866002080015828}
   targetNumberText: {fileID: 5040003173270866409}
   scoreNumberTextPrefab: {fileID: 5446308552642535294, guid: 770c33a6ef5835e43b87598627d69deb,
+    type: 3}
+  gameManager: {fileID: 8891589222588991757, guid: d963fefb29d016d4fa714bbb23dac679,
     type: 3}
 --- !u!95 &7905372789284250461
 Animator:

@@ -6,10 +6,10 @@ public class Target : MonoBehaviour
     public int maxScore = 100;
     public int minScore = 5;
     public Collider targetCollider;
-    //public GameManager gameManager;
 
     public TextMesh targetNumberText;
     public GameObject scoreNumberTextPrefab;
+
     private int score;
     private int targetNumber;
 
@@ -22,7 +22,7 @@ public class Target : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public int GetTargetNumber()
@@ -44,7 +44,8 @@ public class Target : MonoBehaviour
         if (actualScore < minScore)
         {
             return minScore;
-        } else
+        }
+        else
         {
             return Mathf.RoundToInt(actualScore);
         }
@@ -68,8 +69,8 @@ public class Target : MonoBehaviour
 
             Debug.Log("Target " + targetNumber + " hit, score is " + score);
 
-            //gameManager.IncreaseScore(score);
-            //gameManager.AnswerQuestion(0);
+            GameManager.singleton.IncreaseScore(score);
+            GameManager.singleton.AnswerQuestion(targetNumber);
         }
     }
 
@@ -80,4 +81,4 @@ public class Target : MonoBehaviour
         GameObject scoreNumber = Instantiate(scoreNumberTextPrefab, position, rotation);
         scoreNumber.GetComponent<TextMesh>().text = score.ToString();
     }
-} 
+}

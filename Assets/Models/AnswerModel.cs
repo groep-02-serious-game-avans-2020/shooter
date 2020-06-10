@@ -1,9 +1,12 @@
-﻿namespace Assets.Models
+﻿using System;
+
+namespace Assets.Models
 {
+    [Serializable]
     public class AnswerModel
     {
-        public int questionNumber { get; set; }
-        public string textAnswer { get; set; }
-        public int numberAnswer { get; set; }
+        public int questionNumber;
+        public string textAnswer;
+        public int numberAnswer;
     }
 }
