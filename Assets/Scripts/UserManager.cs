@@ -1,5 +1,6 @@
 ﻿using Assets.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using UnityEngine;
@@ -11,7 +12,7 @@ using UnityEngine.UI;
 /// </summary>
 public class UserManager : MonoBehaviour
 {
-    private static UserManager singleton;
+    public static UserManager singleton;
     private UserModel user;
     private HttpWebRequest request;
 
@@ -61,44 +62,52 @@ public class UserManager : MonoBehaviour
             streamWriter.Write(json);
         }
 
-        var response = (HttpWebResponse)request.GetResponse();
+        try
+        {
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-        string result;
-        using (var streamReader = new StreamReader(response.GetResponseStream()))
-        {
-            result = streamReader.ReadToEnd();
-        }
+            string result;
+            using (var streamReader = new StreamReader(response.GetResponseStream()))
+            {
+                result = streamReader.ReadToEnd();
+            }
 
-        if (response.StatusCode == HttpStatusCode.OK)
-        {
-            Debug.Log("Login successful, redirecting to main menu", this);
-            this.user = JsonUtility.FromJson<UserModel>(result.ToString());
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Debug.Log("Login successful, redirecting to main menu", this);
+                this.user = JsonUtility.FromJson<UserModel>(result.ToString());
 
-            // Write the user credentials to the PlayerPrefs to save login
-            PlayerPrefs.SetString("auth", user.auth.ToString());
-            PlayerPrefs.SetString("token", user.token);
-            PlayerPrefs.SetString("userId", user.userid);
-            PlayerPrefs.Save();
+                // Write the user credentials to the PlayerPrefs to save login
+                PlayerPrefs.SetString("auth", user.auth.ToString());
+                PlayerPrefs.SetString("token", user.token);
+                PlayerPrefs.SetString("userId", user.userid);
+                PlayerPrefs.Save();
 
-            SceneManager.LoadScene("main_menu");
+                SceneManager.LoadScene("main_menu");
+            }
         }
-        else if (response.StatusCode == HttpStatusCode.NotFound)
+        catch (WebException ex)
         {
-            // User not found
-            Debug.Log("Login failed: user not found", this);
-            errorText.text = "User not found!";
-        }
-        else if (response.StatusCode == HttpStatusCode.Unauthorized)
-        {
-            // Login invalid
-            Debug.Log("Login failed: invalid credentials", this);
-            errorText.text = "Invalid credentials!";
-        }
-        else
-        {
-            // Other error
-            Debug.Log("Login failed: other error", this);
-            errorText.text = response.ToString();
+            HttpWebResponse exResponse = (HttpWebResponse)ex.Response;
+
+            if (exResponse.StatusCode == HttpStatusCode.NotFound)
+            {
+                // User not found
+                Debug.Log("Login failed: user not found", this);
+                errorText.text = "User not found!";
+            }
+            else if (exResponse.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                // Login invalid
+                Debug.Log("Login failed: invalid credentials", this);
+                errorText.text = "Invalid credentials!";
+            }
+            else
+            {
+                // Other error
+                Debug.Log("Login failed: other error", this);
+                errorText.text = exResponse.ToString();
+            }
         }
     }
 
@@ -165,9 +174,24 @@ public class UserManager : MonoBehaviour
         return false;
     }
 
-    public string getUserDisplayName()
+    public string GetUserDisplayName()
     {
         return user.displayName;
+    }
+    
+    public string GetUserId()
+    {
+        return user.userid;
+    }
+
+    public List<string> GetScannedQrCodes()
+    {
+        return user.scannedQrs;
+    }
+
+    public bool UserHasScannedQrCode(string qrCode)
+    {
+        return user.scannedQrs.Contains(qrCode);
     }
 
     public class LoginCredentials

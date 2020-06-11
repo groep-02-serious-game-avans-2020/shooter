@@ -27,7 +27,7 @@ public class QrScanner : MonoBehaviour
         }
     }
 
-    
+
     /// <summary>
     /// Render the camera view if the QR-Code is not yet recognised
     /// </summary>
@@ -79,7 +79,6 @@ public class QrScanner : MonoBehaviour
             Debug.LogError(e);
         }
 
-
         if (qrCode == null)
         {
             // The Code is parsable to a Shurvey QR-Code, but the content is not recognised
@@ -94,8 +93,20 @@ public class QrScanner : MonoBehaviour
             SurveyModel survey = FetchSurvey(qrCode._id);
             if (survey != null)
             {
-                statusText.text = "Survey `" + survey.title + "` found, start survey?";
-                confirmButton.interactable = true;
+                if (UserManager.singleton.UserHasScannedQrCode(qrCode._id))
+                {
+                    statusText.text = "You have already answered this survey.";
+                }
+                else
+                {
+                    statusText.text = "Survey\n`" + survey.title + "`\nfound, start survey?";
+                    confirmButton.interactable = true;
+                }
+            }
+            else
+            {
+                statusText.text = "Error while fetching survey, please try again.";
+                confirmButton.interactable = false;
             }
         }
         else if (qrCode.type == "cosmetic")

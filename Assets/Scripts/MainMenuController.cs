@@ -19,7 +19,7 @@ public class MainMenuController : MonoBehaviour
     {
         UiAudioSource = GetComponent<AudioSource>();
         var userManager = GameObject.Find("UserManager").GetComponent<UserManager>();
-        userDisplayNameText.text = userManager.getUserDisplayName();
+        userDisplayNameText.text = userManager.GetUserDisplayName();
     }
 
     // Update is called once per frame

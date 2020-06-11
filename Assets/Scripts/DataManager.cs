@@ -18,6 +18,7 @@ public class DataManager : MonoBehaviour
     private HttpWebRequest request;
 
     private string apiUrl = "http://localhost:3000/api/";
+    //private string apiUrl = "https://shurvey-server.herokuapp.com/api/";
     private string surveyUrl = "survey";
     private string userUrl = "user";
     private string answerUrl = "answer";
@@ -79,12 +80,6 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     /// <summary>
     /// Tries to fetch a survey from the server
     /// </summary>
@@ -142,7 +137,7 @@ public class DataManager : MonoBehaviour
 
         using (var streamWriter = new StreamWriter(request.GetRequestStream()))
         {
-            string json = "[";
+            string json = "{\"answers\":[";
 
             for (int i = 0; i < answers.Count; i++)
             {
@@ -157,7 +152,7 @@ public class DataManager : MonoBehaviour
                 }
             }
 
-            json += "]";
+            json += "],\"userId\":\"" + UserManager.singleton.GetUserId() + "\"}";
 
             streamWriter.Write(json);
             Debug.Log(json);
