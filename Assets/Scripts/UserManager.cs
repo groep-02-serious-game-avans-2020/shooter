@@ -1,5 +1,4 @@
 ﻿using Assets.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -32,25 +31,14 @@ public class UserManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     /// <summary>
     /// Sign in a user using the input fields on the login screen
     /// </summary>
     public void SignIn()
     {
         Debug.Log("Attempting to sign in user...", this);
-        request = (HttpWebRequest)WebRequest.Create(BackendController.apiUrl + BackendController.userUrl + "login");
+        Debug.Log("API URL: " + DataManager.singleton.apiUrl + DataManager.singleton.userUrl + "login");
+        request = (HttpWebRequest)WebRequest.Create(DataManager.singleton.apiUrl + DataManager.singleton.userUrl + "login");
         request.ContentType = "application/json";
         request.Method = "POST";
 
@@ -88,6 +76,8 @@ public class UserManager : MonoBehaviour
         }
         catch (WebException ex)
         {
+            Debug.Log(ex.ToString());
+
             HttpWebResponse exResponse = (HttpWebResponse)ex.Response;
 
             if (exResponse.StatusCode == HttpStatusCode.NotFound)
@@ -118,7 +108,7 @@ public class UserManager : MonoBehaviour
     {
         Debug.Log("Fetching the user data for the logged in user...", this);
 
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(BackendController.apiUrl + BackendController.userUrl + userId);
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(DataManager.singleton.apiUrl + DataManager.singleton.userUrl + userId);
         request.ContentType = "application/json";
         request.Method = "GET";
 
@@ -178,7 +168,7 @@ public class UserManager : MonoBehaviour
     {
         return user.displayName;
     }
-    
+
     public string GetUserId()
     {
         return user.userid;

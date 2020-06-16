@@ -1,5 +1,4 @@
 ﻿using Assets.Models;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -17,11 +16,11 @@ public class DataManager : MonoBehaviour
 
     private HttpWebRequest request;
 
-    private string apiUrl = "http://localhost:3000/api/";
-    //private string apiUrl = "https://shurvey-server.herokuapp.com/api/";
-    private string surveyUrl = "survey";
-    private string userUrl = "user";
-    private string answerUrl = "answer";
+    //public string apiUrl = "http://localhost:3000/api/";
+    public string apiUrl = "https://shurvey-server.herokuapp.com/api/";
+    public string surveyUrl = "survey/";
+    public string userUrl = "user/";
+    public string answerUrl = "answer/";
 
     private void Awake()
     {
@@ -37,6 +36,7 @@ public class DataManager : MonoBehaviour
 
     void Start()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         CheckIfUserIsSignedIn();
     }
 
@@ -89,7 +89,7 @@ public class DataManager : MonoBehaviour
     {
         Debug.Log("Attempting to fetch survey with _id " + _id + " from server", this);
 
-        request = (HttpWebRequest)WebRequest.Create(BackendController.apiUrl + BackendController.surveyUrl + _id);
+        request = (HttpWebRequest)WebRequest.Create(apiUrl + surveyUrl + _id);
         request.ContentType = "application/json";
         request.Method = "GET";
 
@@ -128,10 +128,10 @@ public class DataManager : MonoBehaviour
     /// <param name="answers">List of answers</param>
     /// <param name="_id">Survey MongoDB _id</param>
     /// <returns></returns>
-    public bool SubmitAnswers(List<AnswerModel> answers, string _id)
+    public bool SubmitAnswers(List<AnswerModel> answers, string _id, int score)
     {
         Debug.Log("Attempting to send answers to backend...", this);
-        request = (HttpWebRequest)WebRequest.Create(BackendController.apiUrl + BackendController.surveyUrl + _id);
+        request = (HttpWebRequest)WebRequest.Create(apiUrl + surveyUrl + _id);
         request.ContentType = "application/json";
         request.Method = "PUT";
 
@@ -147,15 +147,16 @@ public class DataManager : MonoBehaviour
 
                 }
                 else
-                { 
+                {
                     json += JsonUtility.ToJson(answers[i]);
                 }
             }
 
-            json += "],\"userId\":\"" + UserManager.singleton.GetUserId() + "\"}";
+            json += "],\"userId\":\"" + UserManager.singleton.GetUserId() + "\",";
+            json += "\"userName\":\"" + UserManager.singleton.GetUserDisplayName() + "\",";
+            json += "\"highScore\":" + score + "}";
 
             streamWriter.Write(json);
-            Debug.Log(json);
         }
 
         var response = (HttpWebResponse)request.GetResponse();
@@ -169,6 +170,8 @@ public class DataManager : MonoBehaviour
         if (response.StatusCode == HttpStatusCode.OK)
         {
             Debug.Log("Sumbit successful, redirecting to main menu", this);
+            Debug.Log(result);
+            GameManager.singleton.highScores = JsonUtility.FromJson<HighScoreList>("{\"highScores\":" + result + "}");
             return true;
         }
         else if (response.StatusCode == HttpStatusCode.NotFound)

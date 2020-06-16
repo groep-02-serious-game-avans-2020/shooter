@@ -397,6 +397,10 @@ MonoBehaviour:
     _id: 
     title: 
     questions: []
+  apiUrl: https://shurvey-server.herokuapp.com/api/
+  surveyUrl: survey/
+  userUrl: user/
+  answerUrl: answer/
 --- !u!4 &2018046243
 Transform:
   m_ObjectHideFlags: 0

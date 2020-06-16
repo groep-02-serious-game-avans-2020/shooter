@@ -10,6 +10,7 @@ TagManager:
   - target_4
   - target_5
   - arrow
+  - Bow
   layers:
   - Default
   - TransparentFX
