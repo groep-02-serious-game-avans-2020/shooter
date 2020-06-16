@@ -105,6 +105,7 @@ public class DataManager : MonoBehaviour
         {
             SurveyModel survey = JsonUtility.FromJson<SurveyModel>(result);
             Debug.Log("Survey `" + survey.title + "` fetched successfully", this);
+            Debug.Log(result);
             this.currentSurvey = survey;
             return survey;
         }

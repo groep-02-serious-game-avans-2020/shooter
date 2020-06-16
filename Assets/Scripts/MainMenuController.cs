@@ -43,6 +43,7 @@ public class MainMenuController : MonoBehaviour
     public void QuitGame()
     {
         PlayButtonClickSound();
+        Application.Quit();
     }
 
     private void PlayButtonClickSound()

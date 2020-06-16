@@ -43,10 +43,10 @@ GameObject:
   - component: {fileID: 3698756578145443253}
   - component: {fileID: 3698756578145443250}
   - component: {fileID: 3698756578145443248}
-  - component: {fileID: 3698756578145443251}
+  - component: {fileID: 4459159906800334003}
   m_Layer: 0
   m_Name: mesh
-  m_TagString: Untagged
+  m_TagString: bonus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +126,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: eed394fc53e584b488fccbd7ee8ec877, type: 3}
---- !u!114 &3698756578145443251
+--- !u!114 &4459159906800334003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3698756578145443249}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf5711ade6ddb9c4da21eec75cffb5d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c0903ec7e0e29e43b88727fcad2422f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3698756578546074233
@@ -270,12 +270,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3698756578761867039}
-  - component: {fileID: 3698756578761867036}
   - component: {fileID: 3698756578761867037}
   - component: {fileID: 3698756578761867034}
   m_Layer: 0
   m_Name: Bonus Target
-  m_TagString: bonus
+  m_TagString: bonus-target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -297,25 +296,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3698756578761867036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3698756578761867035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f00e07227c7fc0241a9d8af985bb5d53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetCenter: {fileID: 3698756578546074232}
-  maxScore: 100
-  minScore: 5
-  targetCollider: {fileID: 3698756578145443248}
-  targetNumberText: {fileID: 3698756578686699218}
-  scoreNumberTextPrefab: {fileID: 5446308552642535294, guid: 770c33a6ef5835e43b87598627d69deb,
-    type: 3}
 --- !u!95 &3698756578761867037
 Animator:
   serializedVersion: 3
@@ -348,3 +328,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 3698756578761867035}
+  targetCenter: {fileID: 3698756578546074232}
+  maxScore: 100
+  minScore: 5
+  targetCollider: {fileID: 3698756578145443248}
+  scoreNumberTextPrefab: {fileID: 5446308552642535294, guid: 770c33a6ef5835e43b87598627d69deb,
+    type: 3}

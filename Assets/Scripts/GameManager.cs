@@ -21,12 +21,14 @@ public class GameManager : MonoBehaviour
     public GameObject highScoreCanvas;
     public RectTransform highScoreSpawnPoint;
     public Player player;
+    public GameObject bonusTargetPrefab;
 
     private SurveyModel currentSurvey;
     private QuestionModel currentQuestion;
     private List<AnswerModel> answers;
     private int totalScore = 0;
     private int questionsAnswered = 0;
+    private System.Random random = new System.Random();
 
     private void Awake()
     {
@@ -91,6 +93,7 @@ public class GameManager : MonoBehaviour
         if (questionsAnswered < currentSurvey.questions.Count)
         {
             currentQuestion = currentSurvey.questions[currentQuestion.questionNumber];
+            SpawnBonus();
         }
         else
         {
@@ -160,6 +163,15 @@ public class GameManager : MonoBehaviour
                 hsScript.userName = highScores.highScores[i].userName;
                 hsScript.userScore = highScores.highScores[i].score;
             }
+        }
+    }
+
+    void SpawnBonus()
+    {
+        if (random.Next(3) == 1)
+        {
+            Debug.Log("A bonus target has appeared!");
+            Instantiate(bonusTargetPrefab);
         }
     }
 

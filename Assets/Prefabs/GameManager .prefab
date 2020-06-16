@@ -47,3 +47,11 @@ MonoBehaviour:
   surveyNameText: {fileID: 0}
   totalScoreText: {fileID: 0}
   currentScoreText: {fileID: 0}
+  highScores:
+    highScores: []
+  highScorePrefab: {fileID: 0}
+  highScoreCanvas: {fileID: 0}
+  highScoreSpawnPoint: {fileID: 0}
+  player: {fileID: 0}
+  bonusTargetPrefab: {fileID: 3698756578761867035, guid: e2a807d6e0ea3cb428cce8922ac11c58,
+    type: 3}

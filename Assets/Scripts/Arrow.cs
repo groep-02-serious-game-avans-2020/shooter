@@ -38,6 +38,7 @@ private void OnCollisionEnter(Collision collision)
             hitObject = true;
             Stick();
         }
+
         // If the arrow hits another arrow, ignore its boxcollider
         else
         {
@@ -45,7 +46,7 @@ private void OnCollisionEnter(Collision collision)
         }
 
         //If a bonus target exists, send coords from last arrowcollision
-        bonusTargets = GameObject.FindGameObjectsWithTag("bonus");
+        bonusTargets = GameObject.FindGameObjectsWithTag("bonus-target");
         if (bonusTargets.Length > 0)
         {
             foreach (GameObject target in bonusTargets)
@@ -55,18 +56,18 @@ private void OnCollisionEnter(Collision collision)
             }
         }
 
-        if (collision.gameObject.name.Contains("bonus"))
+        //If the arrow collided with a bonus target, remove the floating arrow
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.CompareTag("bonus"))
         {
-            foreach (GameObject target in bonusTargets)
-            {
-                TargetAI ai = target.GetComponent<TargetAI>();
-                ai.Destroy();
-            }
+            Destroy(gameObject);
         }
     }
 
     private void Stick()
     {
         rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        //Remove hitboxes to avoid colliding with a moving target.
+        boxCollider.enabled = false;
     }
 }

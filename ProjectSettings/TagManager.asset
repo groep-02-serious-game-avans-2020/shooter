@@ -11,6 +11,8 @@ TagManager:
   - target_5
   - arrow
   - Bow
+  - bonus
+  - bonus-target
   layers:
   - Default
   - TransparentFX
