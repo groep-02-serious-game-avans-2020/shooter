@@ -7,6 +7,7 @@ public class Arrow : MonoBehaviour
     private new Rigidbody rigidbody;
     private BoxCollider boxCollider;
     private bool hitObject = false;
+    private GameObject[] bonusTargets;
 
     public AudioSource arrowAudioSource;
     public AudioClip arrowHitSound;
@@ -29,24 +30,38 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+private void OnCollisionEnter(Collision collision)
     {
         // If the arrow hits anything else than another arrow
         if (!collision.gameObject.name.Contains("arrow"))
         {
-            arrowAudioSource.PlayOneShot(arrowHitSound);
             hitObject = true;
             Stick();
-
-            if (collision.gameObject.name == "target_mesh")
-            {
-                arrowAudioSource.PlayOneShot(arrowHitTargetSound);
-            }
         }
-        // If the arrow hits another arrow, ignore it's boxcollider
+        // If the arrow hits another arrow, ignore its boxcollider
         else
         {
             Physics.IgnoreCollision(boxCollider, collision.collider, true);
+        }
+
+        //If a bonus target exists, send coords from last arrowcollision
+        bonusTargets = GameObject.FindGameObjectsWithTag("bonus");
+        if (bonusTargets.Length > 0)
+        {
+            foreach (GameObject target in bonusTargets)
+            {
+                TargetAI ai = target.GetComponent<TargetAI>();
+                ai.StartMovement(collision.contacts[0].point);
+            }
+        }
+
+        if (collision.gameObject.name.Contains("bonus"))
+        {
+            foreach (GameObject target in bonusTargets)
+            {
+                TargetAI ai = target.GetComponent<TargetAI>();
+                ai.Destroy();
+            }
         }
     }
 
