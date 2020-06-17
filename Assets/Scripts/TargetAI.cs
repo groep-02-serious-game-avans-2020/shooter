@@ -28,7 +28,7 @@ public class TargetAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Approximately(transform.position.x, targetLocation.x) && Mathf.Approximately(transform.position.y, targetLocation.y))
+        if (Mathf.Approximately(transform.position.x, targetLocation.x) && Mathf.Approximately(transform.position.z, targetLocation.z))
         {
             GetRandomVector();
         }
@@ -39,9 +39,9 @@ public class TargetAI : MonoBehaviour
 
     public void StartMovement(Vector3 arrowCollision)
     {
-        if (arrowCollision.y < 0)
+        if (arrowCollision.y < 5)
         {
-            arrowCollision.y = 0;
+            arrowCollision.y = 5;
         } 
         else
         {
@@ -58,9 +58,9 @@ public class TargetAI : MonoBehaviour
     {
         targetLocation = new Vector3(random.Next(-11, 11) + targetController.transform.position.x, random.Next(-11, 11) + targetController.transform.position.y, random.Next(-11, 11) + targetController.transform.position.z);
         //Avoid the target from disappearing underground
-        if (targetLocation.y < 0)
+        if (targetLocation.y < 5)
         {
-            targetLocation.y = 0;
+            targetLocation.y = 5;
         }
     }
 

@@ -364,6 +364,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1845535263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1845535265}
+  - component: {fileID: 1845535264}
+  m_Layer: 0
+  m_Name: CharacterCustomizations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1845535264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845535263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1acc0dab40c848147857062e65b283d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinMaterial: {fileID: 2100000, guid: 6b06ffff096d9ba4995663cf0cf043d9, type: 2}
+  shirtMaterial: {fileID: 2100000, guid: 5cf5b5b382d2c4d468a251e845a425cc, type: 2}
+  pantsMaterial: {fileID: 2100000, guid: 70d761670a7cd164c87007a4d64756ab, type: 2}
+  shoesMaterial: {fileID: 2100000, guid: c3dc3fdc651e951479c94809230321bc, type: 2}
+  eyeMaterial: {fileID: 2100000, guid: 157dac6e04c70f340b29ffa5272844ba, type: 2}
+--- !u!4 &1845535265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845535263}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 369.15298, y: 599.3344, z: -40.53784}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2018046241
 GameObject:
   m_ObjectHideFlags: 0

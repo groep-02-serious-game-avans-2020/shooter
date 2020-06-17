@@ -7,14 +7,8 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    class CharacterCosmeticsController : MonoBehaviour
+    public class CharacterCosmeticsController : MonoBehaviour
     {
-        public Material skinMaterial;
-        public Material shirtMaterial;
-        public Material pantsMaterial;
-        public Material shoesMaterial;
-        public Material eyeMaterial;
-
         public MeshRenderer skin;
         public MeshRenderer shirt;
         public MeshRenderer pants;
@@ -23,11 +17,33 @@ namespace Assets.Scripts
 
         private void Start()
         {
-            skin.material = skinMaterial;
-            shirt.material = shirtMaterial;
-            pants.material = pantsMaterial;
-            shoes.material = shoesMaterial;
-            eye.material = eyeMaterial;
+            skin.material = CharacterSingleton.singleton.skinMaterial;
+            shirt.material = CharacterSingleton.singleton.shirtMaterial;
+            pants.material = CharacterSingleton.singleton.pantsMaterial;
+            shoes.material = CharacterSingleton.singleton.shoesMaterial;
+            eye.material = CharacterSingleton.singleton.eyeMaterial;
+        }
+
+        public void SetMaterial(int slot, Material mat)
+        {
+            switch (slot)
+            {
+                case 1:
+                    skin.material = mat;
+                    break;
+                case 2:
+                    eye.material = mat;
+                    break;
+                case 3:
+                    shirt.material = mat;
+                    break;
+                case 4:
+                    pants.material = mat;
+                    break;
+                case 5:
+                    shoes.material = mat;
+                    break;
+            }
         }
     }
 }
