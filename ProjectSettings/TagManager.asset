@@ -13,6 +13,7 @@ TagManager:
   - Bow
   - bonus
   - bonus-target
+  - color
   layers:
   - Default
   - TransparentFX
