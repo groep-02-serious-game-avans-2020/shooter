@@ -46,16 +46,16 @@ public class DataManager : MonoBehaviour
     private void CheckIfUserIsSignedIn()
     {
         Debug.Log("Game started, checking if user is logged in...", this);
-        if (UserIsSignedIn())
+        if (PlayerPrefsHasToken())
         {
             Debug.Log("User is logged in, checking if token is still valid...", this);
 
             UserManager userManager = new UserManager();
 
-            if (userManager.tokenIsValid())
+            if (userManager.TokenIsValid())
             {
                 Debug.Log("Token is still valid, fetching user data from server...", this);
-                userManager.fetchLoggedinUserData(PlayerPrefs.GetString("token"), PlayerPrefs.GetString("userId"));
+                userManager.FetchLoggedinUserData(PlayerPrefs.GetString("token"), PlayerPrefs.GetString("userId"));
 
                 gameObject.AddComponent<UserManager>();
 
@@ -187,7 +187,7 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// Checks if a user is signed in
     /// </summary>
-    private bool UserIsSignedIn()
+    private bool PlayerPrefsHasToken()
     {
         if (PlayerPrefs.HasKey("token"))
         {

@@ -104,7 +104,7 @@ public class UserManager : MonoBehaviour
     /// <summary>
     /// Fetch the user data using the token and id saved in the PlayerPrefs
     /// </summary>
-    public UserModel fetchLoggedinUserData(string token, string userId)
+    public UserModel FetchLoggedinUserData(string token, string userId)
     {
         Debug.Log("Fetching the user data for the logged in user...", this);
 
@@ -157,7 +157,7 @@ public class UserManager : MonoBehaviour
     /// <summary>
     /// Check if the saved token is still valid
     /// </summary>
-    public bool tokenIsValid()
+    public bool TokenIsValid()
     {
         Debug.Log("Checking if the saved token is still valid...", this);
         // TODO: Check if token is still valid in backend
